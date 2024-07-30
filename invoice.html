@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INVOICE</title>
+    <link href="invoice.css" rel="stylesheet">
+	<style>
+	body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.invoice-info,
+.customer-info,
+.item-table,
+.payment-info {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    border: 1px solid #ccc;
+    padding: 5px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+.total {
+    font-weight: bold;
+}
+
+footer {
+    text-align: center;
+    margin-top: 20px;
+}
+	</style>
+</head>
+
+<body>
+    <header>
+        <h1>Invoice</h1>
+    </header>
+    <div style="width: 80%; margin: auto; border: 1px rgb(75, 75, 75) solid; padding: 20px;">
+        <section class="invoice-info">
+            <div class="invoice-number">
+                <h5>Nomor Invoice:</h5>
+                <span id="invoice-number">01/2024/LTHS</span>
+            </div>
+            <div class="invoice-date">
+                <h5>Tanggal Invoice :</h5>
+                <span id="invoice-date"></span>
+            </div>
+        </section>
+
+        <section class="customer-info">
+            <div class="customer-name">
+                <h5>Nama Customer :</h5>
+                <span id="customer-name"></span>
+            </div>
+            <div class="customer-address">
+                <h5>Alamat Customer  :</h5>
+                <span id="customer-address"></span>
+            </div>
+        </section>
+
+        <section class="item-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Type Handphone</th>
+                        <th>Quantity</th>
+                        <th>Harga satuan</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td id="jenis"></td>
+                        <td id="quantity"></td>
+                        <td id="harga"></td>
+                        <td id="total"></td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="4">Subtotal</td>
+                        <td id="subtotal"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">Tax</td>
+                        <td id="tax"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">Total</td>
+                        <td id="totalakhir"></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </section>
+
+        <section class="payment-info">
+            <p>Methode Payment :</p>
+            <ul>
+                <li>Cash on delivery</li>
+                <li>Credit card accepted</li>
+            </ul>
+        </section>
+    </div>
+    <footer>
+        <p>Terimakasih terlah melakukan pembelian !</p>
+    </footer>
+    <script>
+        function getQueryParameters(url) {
+            const urlParams = new URLSearchParams(url);
+            const params = {};
+
+            for (const [key, value] of urlParams.entries()) {
+                params[key] = value;
+            }
+
+            return params;
+        }
+        const myUrl = window.location.href
+        const queryParams = getQueryParameters(myUrl);
+        console.log(queryParams)
+        const date = new Date()
+        document.getElementById('invoice-date').innerText = date.toDateString()
+        document.getElementById("customer-name").innerText = queryParams.nama
+        document.getElementById("customer-address").innerText = queryParams.alamat
+        document.getElementById("quantity").innerText = queryParams.jumlah
+        document.getElementById("jenis").innerText = queryParams.type 
+
+        if(queryParams.type=="Iphone 13"){
+           document.getElementById("harga").innerText = "Rp. 10.249.000"    
+           document.getElementById("total").innerText = `Rp. ${10249000 * queryParams.jumlah}`
+           document.getElementById("subtotal").innerText = `Rp. ${10249000 * queryParams.jumlah}`
+           document.getElementById("tax").innerText = `Rp. ${10249000 * queryParams.jumlah*0.03}`
+           document.getElementById("totalakhir").innerText = `Rp. ${(10249000 * queryParams.jumlah)+(10249000 * queryParams.jumlah*0.03)}`
+        }else if(queryParams.type=='Iphone 14'){
+           document.getElementById("harga").innerText = "Rp. 12.249.000"
+           document.getElementById("total").innerText = `Rp. ${12249000 * queryParams.jumlah}` 
+           document.getElementById("subtotal").innerText = `Rp. ${12249000 * queryParams.jumlah}`
+           document.getElementById("tax").innerText = `Rp. ${12249000 * queryParams.jumlah*0.03}`
+           document.getElementById("totalakhir").innerText = `Rp. ${(12249000 * queryParams.jumlah)+(12249000 * queryParams.jumlah*0.03)}`
+        }else if(queryParams.type=='Iphone 15'){
+           document.getElementById("harga").innerText = "Rp. 14.249.000" 
+           document.getElementById("total").innerText = `Rp. ${14249000 * queryParams.jumlah}`
+           document.getElementById("subtotal").innerText = `Rp. ${14249000 * queryParams.jumlah}`
+           document.getElementById("tax").innerText = `Rp. ${(14249000 * queryParams.jumlah)*0.03}`
+           document.getElementById("totalakhir").innerText = `Rp. ${(14249000 * queryParams.jumlah)+(14249000 * queryParams.jumlah*0.03)}`
+        }
+        
+    </script>
+</body>
+
+</html>
